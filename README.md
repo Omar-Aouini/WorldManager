@@ -2,9 +2,11 @@ Simple RESTful web Service aimed to manage a simple MySQL database of cities and
 
 -spring boot
 
+-spring web MVC
+
 -spring data jpa / Hibernate for ORM
 
--spring web MVC
+-MySQL dbms
 
 -dependency manager: Maven
 
