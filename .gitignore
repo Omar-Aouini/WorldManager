@@ -292,6 +292,5 @@ $RECYCLE.BIN/
 HELP.md
 *.iml
 .target
-README.md
 
 # End of https://www.gitignore.io/api/java,linux,macos,maven,windows,eclipse,intellij,netbeans,visualstudiocode
