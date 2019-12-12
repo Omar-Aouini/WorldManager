@@ -26,4 +26,5 @@ public class CountryDTO
     private String headOfState;
     private Integer capital;
     private String code2;
+    
 }

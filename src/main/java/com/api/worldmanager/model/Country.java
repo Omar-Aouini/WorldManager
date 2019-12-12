@@ -13,6 +13,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Table(name= "country")
 public class Country{
+
     @Id
     @Column(name = "Code", nullable = false, length = 3)
     private String code;
@@ -58,4 +59,6 @@ public class Country{
     @Basic
     @Column(name = "Code2", nullable = false, length = 2)
     private String code2;
+
     }
+

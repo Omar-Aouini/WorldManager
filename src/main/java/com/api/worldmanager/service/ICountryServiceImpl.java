@@ -24,20 +24,21 @@ public class ICountryServiceImpl implements ICountryService {
     @Autowired
     ModelMapper modelMapper;
 
+
     private boolean isValidCode(String countrycode) {
         return (countrycode != null && !countrycode.equals("") && countrycode.length() == 3) ? true : false;
     }
+    
 
     @Override
-    public List<CountryDTO> getAllCountries() {
-        List<Country> list = countryRepository.findAll();
-        List<CountryDTO> listCountryDto = new ArrayList<>();
-        for (Country c : list) {
-            CountryDTO countrydto = modelMapper.map(c, CountryDTO.class);
-            listCountryDto.add(countrydto);
-        }
-        return listCountryDto;
+    public List<CountryDTO> getAllCountries()
+    {
+        return countryRepository.findAll()
+                                .stream()
+                                .map(country -> modelMapper.map(country, CountryDTO.class))
+                                .collect(Collectors.toList());
     }
+
 
     @Override
     public CountryDTO getCountryByCountryCode(String countrycode) throws Exception, EntityNotFoundException {
