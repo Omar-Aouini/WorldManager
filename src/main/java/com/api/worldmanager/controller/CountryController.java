@@ -84,10 +84,12 @@ public class CountryController
         return countryservice.getAllCountriesLifeExpectancyGreaterThan(yearsoflife);
     }
 
+    /*
     @GetMapping("/api/countries/headsofstate")
     public List<String> getAllCountriesHeadOfState() throws Exception {
         return countryservice.getAllCountriesHeadOfState();
     }
+    */
 
 
     //POST
