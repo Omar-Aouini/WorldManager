@@ -50,8 +50,8 @@ public class ICityServiceImpl implements ICityService
         {
             try
             {
-             Optional<City> city = cityRepository.findById(id);
-             return modelMapper.map(city, CityDTO.class);
+                Optional<City> city = cityRepository.findById(id);
+                return modelMapper.map(city.get(), CityDTO.class);
             }
             catch(EntityNotFoundException e)
             {
@@ -69,7 +69,7 @@ public class ICityServiceImpl implements ICityService
             try
             {
             Optional<City> city = cityRepository.findByName(name);
-            return modelMapper.map(city, CityDTO.class);
+            return modelMapper.map(city.get(), CityDTO.class);
             }
             catch(EntityNotFoundException e)
             {
@@ -118,7 +118,7 @@ public class ICityServiceImpl implements ICityService
             try
             {
             Optional<City> city = cityRepository.findByCountryCode(countrycode);
-            return modelMapper.map(city, CityDTO.class);
+            return modelMapper.map(city.get(), CityDTO.class);
             }
             catch(EntityNotFoundException e)
             {
