@@ -1,9 +1,7 @@
 package com.api.worldmanager.validation;
 
-import com.api.worldmanager.model.City;
+import com.api.worldmanager.dto.CityDTO;
 import com.api.worldmanager.model.Country;
-import lombok.experimental.UtilityClass;
-
 
 //entity validation class, singleton utility class
 public class EntityValidator
@@ -25,7 +23,7 @@ public class EntityValidator
     }
 
 
-    public boolean isCityValid(City city) throws Exception {
+    public boolean isCityValid(CityDTO city) throws Exception {
         if(city != null)
             return  (city.getId() > 0) &&
                 (city.getName() != null && !city.getName().equals("")) &&

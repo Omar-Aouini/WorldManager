@@ -1,21 +1,20 @@
 package com.api.worldmanager.service;
 
-import com.api.worldmanager.model.City;
-
-import javax.swing.text.html.Option;
+import com.api.worldmanager.dto.CityDTO;
 import java.util.List;
-import java.util.Optional;
+import javax.persistence.EntityNotFoundException;
 
 public interface ICityService
 {
-    List<City> getAllCities();
-    Optional<City> getCityById(Integer id) throws Exception;
-    void addCity(City city) throws Exception;
-    void updateCity(Integer id, City city);Optional<City> getCityByName(String name) throws Exception;
-    Optional<City> getCityByCountryCode(String countrycode) throws Exception;
-    List<City> getAllCitiesPopulationLessThan(Integer popnumber) throws Exception;
-    List<City> getAllCitiesPopulationGreaterThan(Integer popnumber) throws Exception;
-    List<City> getAllCitiesByDistrict(String district) throws Exception;
+    List<CityDTO> getAllCities();
+    CityDTO getCityByName(String name) throws Exception, EntityNotFoundException;
+    CityDTO getCityById(Integer id) throws Exception, EntityNotFoundException;
+    void addCity(CityDTO city) throws Exception;
+    void updateCity(Integer id, CityDTO city) throws Exception;
+    CityDTO getCityByCountryCode(String countrycode) throws Exception, EntityNotFoundException;
+    List<CityDTO> getAllCitiesPopulationLessThan(Integer popnumber) throws Exception;
+    List<CityDTO> getAllCitiesPopulationGreaterThan(Integer popnumber) throws Exception;
+    List<CityDTO> getAllCitiesByDistrict(String district) throws Exception;
     void deleteCity(Integer id) throws Exception;
     void deleteAllCities();
 }

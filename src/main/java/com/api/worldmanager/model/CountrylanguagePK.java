@@ -1,16 +1,14 @@
 package com.api.worldmanager.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-
 import javax.persistence.Column;
 import javax.persistence.Id;
 import java.io.Serializable;
 
 @Data
 public class CountrylanguagePK implements Serializable {
+
+    private static final long serialVersionUID = 1L;
     @Column(name = "CountryCode", nullable = false, length = 3)
     @Id
     private String countryCode;
