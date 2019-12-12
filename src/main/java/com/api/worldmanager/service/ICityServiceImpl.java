@@ -11,6 +11,7 @@ import org.modelmapper.ModelMapper;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import javax.persistence.EntityNotFoundException;
 
@@ -24,6 +25,7 @@ public class ICityServiceImpl implements ICityService
     @Autowired
     ModelMapper modelMapper;
 
+
     private boolean isValidId(Integer id)
     {
         return (id != null && !id.equals("") && id > 0) ? true : false;
@@ -33,14 +35,10 @@ public class ICityServiceImpl implements ICityService
     @Override
     public List<CityDTO> getAllCities()
     {
-        List<City> list = cityRepository.findAll();
-        List<CityDTO> listCityDto = new ArrayList<>();
-        for (City c : list)
-        {
-            CityDTO citydto = modelMapper.map(c, CityDTO.class);
-            listCityDto.add(citydto);
-        }
-        return listCityDto;
+        return cityRepository.findAll()
+                                .parallelStream()
+                                .map(city -> modelMapper.map(city, CityDTO.class))
+                                .collect(Collectors.toList());
     }
 
     @Override
@@ -50,8 +48,9 @@ public class ICityServiceImpl implements ICityService
         {
             try
             {
-                Optional<City> city = cityRepository.findById(id);
-                return modelMapper.map(city.get(), CityDTO.class);
+                return cityRepository.findById(id)
+                                        .map(c -> modelMapper.map(c, CityDTO.class))
+                                        .get();
             }
             catch(EntityNotFoundException e)
             {
@@ -68,8 +67,9 @@ public class ICityServiceImpl implements ICityService
         {
             try
             {
-            Optional<City> city = cityRepository.findByName(name);
-            return modelMapper.map(city.get(), CityDTO.class);
+                return cityRepository.findByName(name)
+                                        .map(c -> modelMapper.map(c, CityDTO.class))
+                                        .get();
             }
             catch(EntityNotFoundException e)
             {
@@ -117,8 +117,9 @@ public class ICityServiceImpl implements ICityService
         {
             try
             {
-            Optional<City> city = cityRepository.findByCountryCode(countrycode);
-            return modelMapper.map(city.get(), CityDTO.class);
+                return cityRepository.findByCountryCode(countrycode)
+                                        .map(c -> modelMapper.map(c, CityDTO.class))
+                                        .get();
             }
             catch(EntityNotFoundException e)
             {
@@ -133,14 +134,10 @@ public class ICityServiceImpl implements ICityService
     public List<CityDTO> getAllCitiesPopulationLessThan(Integer popnumber) throws Exception {
         if(popnumber != null && popnumber >= 0)
         {
-           List<City> list = cityRepository.findByPopulationLessThan(popnumber);
-           List<CityDTO> listDto = new ArrayList<>();
-           for (City c : list)
-           {
-               CityDTO cityDto = modelMapper.map(c, CityDTO.class);
-               listDto.add(cityDto);
-           }
-           return listDto;
+           return cityRepository.findByPopulationGreaterThan(popnumber)
+                                    .parallelStream()
+                                    .map(city -> modelMapper.map(city, CityDTO.class))
+                                    .collect(Collectors.toList());
         }
         else
             throw new Exception("popnumber + " + popnumber + " is null or not valid!");
@@ -150,14 +147,10 @@ public class ICityServiceImpl implements ICityService
     public List<CityDTO> getAllCitiesPopulationGreaterThan(Integer popnumber) throws Exception {
         if(popnumber != null && popnumber >= 0)
         {
-           List<City> list = cityRepository.findByPopulationGreaterThan(popnumber);
-           List<CityDTO> listDto = new ArrayList<>();
-           for (City c : list)
-           {
-               CityDTO cityDto = modelMapper.map(c, CityDTO.class);
-               listDto.add(cityDto);
-           }
-           return listDto;
+            return cityRepository.findByPopulationGreaterThan(popnumber)
+                                    .parallelStream()
+                                    .map(city -> modelMapper.map(city, CityDTO.class))
+                                    .collect(Collectors.toList());
 
         }
         else
@@ -172,14 +165,10 @@ public class ICityServiceImpl implements ICityService
         {
             try
             {
-                List<City> list = cityRepository.findByDistrict(district);
-                List<CityDTO> listDto = new ArrayList<>(); 
-                for (City c : list)
-                {
-                    CityDTO cityDto = modelMapper.map(c, CityDTO.class);
-                    listDto.add(cityDto);
-                }
-                return listDto;
+                return cityRepository.findByDistrict(district)
+                                    .parallelStream()
+                                    .map(city -> modelMapper.map(city, CityDTO.class))
+                                    .collect(Collectors.toList());
             }
             catch(EntityNotFoundException e)
             {
