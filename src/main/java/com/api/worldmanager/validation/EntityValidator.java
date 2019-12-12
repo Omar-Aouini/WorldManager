@@ -1,7 +1,7 @@
 package com.api.worldmanager.validation;
 
 import com.api.worldmanager.dto.CityDTO;
-import com.api.worldmanager.model.Country;
+import com.api.worldmanager.dto.CountryDTO;
 
 //entity validation class, singleton utility class
 public class EntityValidator
@@ -34,58 +34,58 @@ public class EntityValidator
     }
 
 
-    public boolean isCountryValid(Country c) throws Exception
+    public boolean isCountryValid(CountryDTO countryDto) throws Exception
     {
-        if(c != null)
-            return (c.getCode().length() > 0   &&
-                    c.getCode().length() <= 3  &&
-                    c.getCode() != null        &&
-                    !c.getCode().equals(""))   &&
+        if(countryDto != null)
+            return (countryDto.getCode().length() > 0   &&
+                    countryDto.getCode().length() <= 3  &&
+                    countryDto.getCode() != null        &&
+                    !countryDto.getCode().equals(""))   &&
 
-                    (c.getName().length() > 0   &&
-                    c.getName().length() <= 52 &&
-                    c.getName() != null        &&
-                    !c.getName().equals(""))   &&
+                    (countryDto.getName().length() > 0   &&
+                    countryDto.getName().length() <= 52 &&
+                    countryDto.getName() != null        &&
+                    !countryDto.getName().equals(""))   &&
 
-                    (c.getContinent().length() > 0 &&
-                    c.getContinent() != null &&
-                    !c.getContinent().equals("")) &&
+                    (countryDto.getContinent().length() > 0 &&
+                    countryDto.getContinent() != null &&
+                    !countryDto.getContinent().equals("")) &&
 
-                    (c.getRegion().length() > 0 &&
-                    c.getRegion().length() <= 26 &&
-                    c.getRegion() != null &&
-                    !c.getRegion().equals(""))   &&
+                    (countryDto.getRegion().length() > 0 &&
+                    countryDto.getRegion().length() <= 26 &&
+                    countryDto.getRegion() != null &&
+                    !countryDto.getRegion().equals(""))   &&
 
-                    (c.getSurfaceArea() >= 0.0 &&
-                    c.getSurfaceArea() != null) &&
+                    (countryDto.getSurfaceArea() >= 0.0 &&
+                    countryDto.getSurfaceArea() != null) &&
 
-                    (c.getIndepYear() >= 0) &&
+                    (countryDto.getIndepYear() >= 0) &&
 
-                    (c.getGnp() >= 0.0 &&
-                      c.getGnp() != null) &&
+                    (countryDto.getGnp() >= 0.0 &&
+                      countryDto.getGnp() != null) &&
 
-                    (c.getGnpOld() >= 0.0 &&
-                    c.getGnpOld() != null) &&
+                    (countryDto.getGnpOld() >= 0.0 &&
+                    countryDto.getGnpOld() != null) &&
 
-                    (c.getLocalName().length() > 0 &&
-                    !c.getLocalName().equals("")) &&
+                    (countryDto.getLocalName().length() > 0 &&
+                    !countryDto.getLocalName().equals("")) &&
 
-                    (c.getGovernmentForm().length() > 0 &&
-                    c.getGovernmentForm() != null &&
-                    !c.getGovernmentForm().equals("")) &&
+                    (countryDto.getGovernmentForm().length() > 0 &&
+                    countryDto.getGovernmentForm() != null &&
+                    !countryDto.getGovernmentForm().equals("")) &&
 
-                    (c.getHeadOfState().length() > 0 &&
-                    !c.getHeadOfState().equals("")) &&
+                    (countryDto.getHeadOfState().length() > 0 &&
+                    !countryDto.getHeadOfState().equals("")) &&
 
-                    (c.getCapital() >= 0 &&
-                     c.getCapital() != null)  &&
+                    (countryDto.getCapital() >= 0 &&
+                     countryDto.getCapital() != null)  &&
 
-                    (c.getCode2() != null &&
-                     c.getCode2().length() > 0 &&
-                     c.getCode2().length() <= 2)
+                    (countryDto.getCode2() != null &&
+                     countryDto.getCode2().length() > 0 &&
+                     countryDto.getCode2().length() <= 2)
                     ;
         else
-            throw new Exception("Country entity " + c + " is not valid!");
+            throw new Exception("Country entity " + countryDto + " is not valid!");
 
     }
 
