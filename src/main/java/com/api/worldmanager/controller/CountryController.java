@@ -7,6 +7,10 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/*
+@RequestMapping("api/countries")
+@CrossOrigin(origins = "http://localhost:4200", allowedHeaders = "*")
+*/
 @RestController
 public class CountryController
 {
@@ -59,7 +63,7 @@ public class CountryController
     public List<CountryDTO> getAllCountriesByRegion(@PathVariable String region) throws Exception {
         return countryservice.getAllCountriesByRegion(region);
     }
-
+    
     @GetMapping("/api/countries/continent/{continent}")
     public List<CountryDTO> getAllCountriesByContinent(@PathVariable String continent) throws Exception
     {

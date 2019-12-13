@@ -8,6 +8,7 @@ public class WorldmanagerApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(WorldmanagerApplication.class, args);
+
     }
 
 }
