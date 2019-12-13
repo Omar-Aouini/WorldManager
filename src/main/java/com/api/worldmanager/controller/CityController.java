@@ -3,79 +3,99 @@ package com.api.worldmanager.controller;
 import com.api.worldmanager.dto.CityDTO;
 import com.api.worldmanager.service.ICityServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.hateoas.*;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /*
-@RequestMapping("api/cities")
 @CrossOrigin(origins = "http://localhost:4200", allowedHeaders = "*")
 */
+@RequestMapping("api/cities")
 @RestController
-public class CityController
-{
+public class CityController {
 
     @Autowired
     ICityServiceImpl cityService;
 
-    //GET
-    @GetMapping("/api/cities")
-    public List<CityDTO> getAllCities()
+    String linktemplate = "http://localhost:8080/api/cities/";
+    
+    // GET
+    @GetMapping
+    public ResponseEntity<?> getAllCities()
     {
-        return cityService.getAllCities();
+        List<CityDTO> list = cityService.getAllCities().parallelStream()
+                                        .map(c-> c.add(new Link(linktemplate + c.getId()).withSelfRel(),
+                                                       new Link(linktemplate).withRel("cities")))          
+                                        .collect(Collectors.toList());
+        if(list.isEmpty())
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
+        return new ResponseEntity<>(list,HttpStatus.OK);
+    }
+    
+
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getCityById(@PathVariable Integer id) throws Exception
+    {
+        RepresentationModel<CityDTO> city = cityService.getCityById(id);
+
+        if(city==null)
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
+        city.add(new Link(linktemplate + id).withSelfRel());
+        return new ResponseEntity<>(city, HttpStatus.OK);
     }
 
-    @GetMapping("/api/cities/{id}")
-    public CityDTO getCityById(@PathVariable Integer id) throws Exception {
-        return cityService.getCityById(id);
-    }
-
-    @GetMapping("/api/cities/name/{name}")
+    @GetMapping("/name/{name}")
     public CityDTO getCityByName(@PathVariable String name) throws Exception {
         return cityService.getCityByName(name);
     }
 
-    @GetMapping("/api/cities/countrycode/{countrycode}")
+    @GetMapping("/countrycode/{countrycode}")
     public CityDTO getCityByCountryCode(@PathVariable String countrycode) throws Exception {
         return cityService.getCityByCountryCode(countrycode);
     }
 
-    @GetMapping("/api/cities/populationlessthan/{popnumber}")
+    @GetMapping("/populationlessthan/{popnumber}")
     public List<CityDTO> getAllCitiesPopulationLessThan(@PathVariable Integer popnumber) throws Exception {
         return cityService.getAllCitiesPopulationLessThan(popnumber);
     }
 
-    @GetMapping("/api/cities/populationgreaterthan/{popnumber}")
+    @GetMapping("/populationgreaterthan/{popnumber}")
     public List<CityDTO> getAllCitiesPopulationGreaterThan(@PathVariable Integer popnumber) throws Exception {
         return cityService.getAllCitiesPopulationGreaterThan(popnumber);
     }
 
-    @GetMapping("/api/cities/district/{district}")
+    @GetMapping("/district/{district}")
     public List<CityDTO> getAllCitiesByDistrict(@PathVariable String district) throws Exception {
         return cityService.getAllCitiesByDistrict(district);
     }
 
 
     //POST
-    @PostMapping("/api/cities")
+    @PostMapping("/new")
     public void addNewCity(@RequestBody CityDTO city) throws Exception {
         cityService.addCity(city);
     }
 
 
     //PUT
-    @PutMapping("/api/cities/{id}")
+    @PutMapping("/{id}")
     public void updateCity(@PathVariable Integer id, @RequestBody CityDTO city) throws Exception {
         cityService.updateCity(id,city);
     }
 
 
     //DELETE
-    @DeleteMapping("/api/cities/{id}")
+    @DeleteMapping("/{id}")
     public void deleteCity(@PathVariable Integer id) throws Exception {
         cityService.deleteCity(id);
     }
 
-    @DeleteMapping("/api/cities}")
+    @DeleteMapping("/api/cities")
     public void deleteAllCities()
     {
         cityService.deleteAllCities();
