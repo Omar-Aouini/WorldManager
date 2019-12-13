@@ -3,7 +3,6 @@ package com.api.worldmanager.controller;
 import com.api.worldmanager.dto.CityDTO;
 import com.api.worldmanager.service.ICityServiceImpl;
 import com.api.worldmanager.validation.EntityValidator;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,12 +28,15 @@ public class CityController {
     @GetMapping
     public ResponseEntity<?> getAllCities()
     {
-        List<CityDTO> list = cityService.getAllCities().parallelStream()
-                                        .map(c-> c.add(new Link(linktemplate + c.getId()).withSelfRel(),
-                                                       new Link(linktemplate).withRel("cities"),
-                                                       new Link(linktemplate + "delete/" + c.getId()).withRel("deletecity"),
-                                                       new Link(linktemplate + "update/" + c.getId()).withRel("updatecity")))          
-                                        .collect(Collectors.toList());
+        List<CityDTO> list = cityService.getAllCities()
+        .parallelStream()
+        .map(c-> c.add(new Link(linktemplate + c.getId()).withSelfRel(),
+                       new Link(linktemplate).withRel("cities"),
+                       new Link(linktemplate + "delete/" + c.getId()).withRel("deletecity"),
+                       new Link(linktemplate + "update/" + c.getId()).withRel("updatecity")
+                       )
+            )          
+        .collect(Collectors.toList());
         if(list.isEmpty())
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
