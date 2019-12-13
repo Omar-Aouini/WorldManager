@@ -1,7 +1,5 @@
 package com.api.worldmanager.dto;
 
-import com.api.worldmanager.model.City;
-
 import org.springframework.hateoas.RepresentationModel;
 
 import lombok.AllArgsConstructor;

@@ -22,7 +22,8 @@ public class CityController {
     @Autowired
     ICityServiceImpl cityService;
 
-    String linktemplate = "http://localhost:8080/api/cities/";
+
+    private String linktemplate = "http://localhost:8080/api/cities/";
     
     // GET
     @GetMapping
@@ -30,7 +31,9 @@ public class CityController {
     {
         List<CityDTO> list = cityService.getAllCities().parallelStream()
                                         .map(c-> c.add(new Link(linktemplate + c.getId()).withSelfRel(),
-                                                       new Link(linktemplate).withRel("cities")))          
+                                                       new Link(linktemplate).withRel("cities"),
+                                                       new Link(linktemplate + "delete/" + c.getId()).withRel("deletecity"),
+                                                       new Link(linktemplate + "update/" + c.getId()).withRel("updatecity")))          
                                         .collect(Collectors.toList());
         if(list.isEmpty())
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -129,7 +132,7 @@ public class CityController {
 
 
     //PUT
-    @PutMapping("/{id}")
+    @PutMapping("/update/{id}")
     public ResponseEntity<?> updateCity(@PathVariable Integer id, @RequestBody CityDTO city) throws Exception
     {
                         //not
@@ -142,8 +145,8 @@ public class CityController {
 
 
     //DELETE
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Object> deleteCity(@PathVariable Integer id) throws Exception
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<?> deleteCity(@PathVariable Integer id) throws Exception
     {
         if(id==null || id <= 0)
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -152,7 +155,7 @@ public class CityController {
             return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @DeleteMapping("/api/cities")
+    @DeleteMapping("/api/cities/deleteall")
     public ResponseEntity<Object> deleteAllCities()
     {
         cityService.deleteAllCities();
