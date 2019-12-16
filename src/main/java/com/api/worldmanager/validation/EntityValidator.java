@@ -9,11 +9,9 @@ public class EntityValidator
 
     private static EntityValidator instance = null;
 
-
     private EntityValidator()
     {
     }
-
 
     public static EntityValidator getInstance()
     {
@@ -21,7 +19,6 @@ public class EntityValidator
             instance = new EntityValidator();
         return instance;
     }
-
 
     public boolean isCityValid(CityDTO city) throws Exception {
         if(city != null)
@@ -32,7 +29,6 @@ public class EntityValidator
         else
             throw new Exception("City" + city + " entity not valid!");
     }
-
 
     public boolean isCountryValid(CountryDTO countryDto) throws Exception
     {

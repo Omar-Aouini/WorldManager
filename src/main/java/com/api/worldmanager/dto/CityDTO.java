@@ -1,7 +1,6 @@
 package com.api.worldmanager.dto;
 
 import org.springframework.hateoas.RepresentationModel;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

@@ -131,13 +131,13 @@ public class CityController {
         cityService.addCity(city);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
-
+    
 
     //PUT
     @PutMapping("/update/{id}")
     public ResponseEntity<?> updateCity(@PathVariable Integer id, @RequestBody CityDTO city) throws Exception
     {
-                        //not
+                        //not valid
         if(city==null || !EntityValidator.getInstance().isCityValid(city) || id==null || id <=0)
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
@@ -168,7 +168,6 @@ public class CityController {
         else
             return new ResponseEntity<>(list,HttpStatus.BAD_REQUEST);
         
-
     }
 
 }
