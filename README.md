@@ -10,6 +10,8 @@ Simple RESTful web Service aimed to manage a simple MySQL database of cities and
 
 -spring HATEOAS
 
+-spring Security, for user authentication and authorization
+
 -MySQL dbms
 
 -dependency manager: Maven
